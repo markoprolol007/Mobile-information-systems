@@ -1,11 +1,13 @@
 class Exam {
-  final String subjectName;
+  final String examName;
   final DateTime dateTime;
   final List<String> rooms;
+  final bool isPassed;
 
   Exam({
-    required this.subjectName,
+    required this.examName,
     required this.dateTime,
-    required this.rooms
+    required this.rooms,
+    this.isPassed = true,
   });
 }

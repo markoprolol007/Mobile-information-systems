@@ -23,7 +23,7 @@ class ExamDetailScreen extends StatelessWidget {
     final formattedDate = DateFormat('dd.MM.yyyy – HH:mm').format(exam.dateTime);
 
     return Scaffold(
-      appBar: AppBar(title: Text(exam.subjectName)),
+      appBar: AppBar(title: FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.center, child: Text(exam.examName)),),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -36,8 +36,7 @@ class ExamDetailScreen extends StatelessWidget {
                 style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 10),
             Text('Преостанато време: ${getRemainingTime()}',
-                style: const TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue)),
+                style: const TextStyle(fontSize: 16)),
           ],
         ),
       ),
