@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/api_service.dart';
 import '../models/meal.dart';
+import 'package:provider/provider.dart';
+import '../services/meal_service.dart';
 
 class MealDetailScreen extends StatefulWidget {
   static const routeName = '/meal-detail';
@@ -32,7 +34,32 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Рецепт')),
+      appBar: AppBar(
+        title: Text('Рецепт'),
+        actions: [
+          FutureBuilder<Meal>(
+            future: _future,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return SizedBox(); // додека се вчитува
+
+              final meal = snapshot.data!;
+              final mealService = Provider.of<MealService>(context);
+              final isFavorite = mealService.isFavorite(meal);
+
+              return IconButton(
+                icon: Icon(
+                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                  color: Colors.red,
+                ),
+                onPressed: () {
+                  mealService.toggleFavorite(meal);
+                  setState(() {}); // освежи го UI за да се смени иконата
+                },
+              );
+            },
+          ),
+        ],
+      ),
       body: FutureBuilder<Meal>(
         future: _future,
         builder: (context, snapshot) {

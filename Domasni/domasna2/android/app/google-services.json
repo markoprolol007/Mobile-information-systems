@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1002306876322",
+    "project_id": "mis-domasna",
+    "storage_bucket": "mis-domasna.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002306876322:android:269bf6b91b8e22e37678fb",
+        "android_client_info": {
+          "package_name": "com.example.domasna2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy7x9eG9xOFPpLMCvxSEmrkF7jAK9osQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,6 +3,8 @@ import '../services/api_service.dart';
 import '../models/meal.dart';
 import '../widgets/meal_card.dart';
 import 'meal_detail_screen.dart';
+import 'package:provider/provider.dart';
+import '../services/meal_service.dart';
 
 class MealsByCategoryScreen extends StatefulWidget {
   static const routeName = '/meals-by-category';
@@ -89,20 +91,54 @@ class _MealsByCategoryScreenState extends State<MealsByCategoryScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
-                              child: Image.network(meal.strMealThumb, fit: BoxFit.cover),
+                              child: Image.network(
+                                meal.strMealThumb,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              ),
                             ),
-                            SizedBox(height: 6),
-                            Text(meal.strMeal, maxLines: 2, overflow: TextOverflow.ellipsis),
-                            SizedBox(height: 6),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_) => MealDetailScreen(mealId: meal.idMeal),
-                                ));
-                              },
-                              child: Text('Детали'),
+
+                            const SizedBox(height: 6),
+
+                            Text(
+                              meal.strMeal,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+
+                            const SizedBox(height: 6),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // Детали копче
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (_) => MealDetailScreen(mealId: meal.idMeal),
+                                    ));
+                                  },
+                                  child: Text('Детали'),
+                                ),
+                                Consumer<MealService>(
+                                  builder: (context, mealService, _) {
+                                    final isFav = mealService.isFavorite(meal);
+                                    return IconButton(
+                                      icon: Icon(
+                                        isFav ? Icons.favorite : Icons.favorite_border,
+                                        color: isFav ? Colors.red : Colors.grey,
+                                      ),
+                                      onPressed: () {
+                                        mealService.toggleFavorite(meal);
+                                        setState(() {});
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
                             )
                           ],
                         ),

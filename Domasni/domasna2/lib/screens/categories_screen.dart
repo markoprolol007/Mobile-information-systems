@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 import '../models/category.dart';
+import '../services/notification_service.dart';
 import '../widgets/category_card.dart';
 import 'meals_by_category_screen.dart';
 import 'meal_detail_screen.dart';
+import 'favorites_screen.dart';
 
 class CategoriesScreen extends StatefulWidget {
   @override
@@ -51,9 +53,33 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       appBar: AppBar(
         title: Text('Категории'),
         actions: [
-          IconButton(onPressed: _openRandom, icon: Icon(Icons.casino)),
+          // Random meal
+          IconButton(
+            onPressed: _openRandom,
+            icon: Icon(Icons.casino),
+          ),
+          IconButton(
+            icon: Icon(Icons.favorite),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => FavoritesScreen()),
+              );
+            },
+          ),
         ],
       ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          NotificationService().showNotification(
+              title: "Recipe of the Day",
+              body: "Отвори ја апликацијата и види го денешниот рецепт!",
+          );
+        },
+        child: Icon(Icons.notifications),
+      ),
+
       body: FutureBuilder<List<CategoryModel>>(
         future: _future,
         builder: (context, snapshot) {
